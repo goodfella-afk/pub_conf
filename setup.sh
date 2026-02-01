@@ -6,6 +6,21 @@ TMUX_CONF="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/.tmux.conf"
 KEYBIND_1="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/wm-keybind.dconf"
 KEYBIND_2="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/media-keys.dconf"
 
+print_help()
+{
+	cat <<EOF
+
+	Following arguments are supported:
+
+	--proxy <http://host:port>   // have this as a first argument if behind a proxy
+	--full (-f)                  // (ws - daily driver)
+	--core (-c)                  // (server, remote)
+	--get-configs                // (vim, tmux)
+	--xsel                       // if --core is chosen but we want x11 frwrd
+
+EOF
+}
+
 # Install vim, tmux
 install_vim_tmux()
 {
@@ -16,6 +31,7 @@ install_vim_tmux()
 	fi
 }
 
+# System clipboard / x11 forwarding
 install_xsel()
 {
 	if command -v apt > /dev/null 2>&1; then
@@ -66,47 +82,74 @@ core_setup()
 	install_vim_tmux && get_configs
 }
 
-get_args()
+check_args()
 {
 	if [[ $# -gt 0 ]]; then
+		args=("$@")
 		while [[ $# -gt 0 ]]; do
 			case $1 in
 				-h|--help)
-					echo -e "Following arguments are supported:\n\n"
-					echo "--proxy <http://host:port> // have this as a first argument if behind a proxy"
-					echo "-f / --full                // (ws - daily driver)"
-					echo "-c / --core                // (server, remote)"
-					echo -e "--xsel                  // if --core is chosen but we want x11 frwrd\n"
+					print_help
 					exit 0
 					;;
-				--proxy)
-					export http_proxy="$2"
-					export https_proxy="$2"
-					shift 2
-					;;
-				-f|--full)
-					full_setup || exit 1
-					shift
-					;;
-				-c|--core)
-					core_setup || exit 1
-					shift
-					;;
-				--xsel)
-					install_xsel || exit 1
-					shift
+				--proxy|-f|--full|-c|--core|--xsel|--get-configs)
 					;;
 				*)
-					echo -e "\n$1 is a bad argument, check --help\n"
+					echo -e "\n"$1" is a bad argument, check --help / -h\n"
 					exit 1
-					;;
+					break
 			esac
+
+			# shift 2 args when we process proxy
+			if [[ $1 == "--proxy" ]]; then
+				shift 2
+			else
+				shift
+			fi
 		done
 	else
-		echo "Missing arguments, check --help"
+		echo "Missing arguments, check --help / -h"
 		exit 1
-	fi
+	fi 
+
+	set -- "${args[@]}" && run_args $@
 }
 
+run_args()
+{
+	while [[ $# -gt 0 ]]; do
+		case $1 in
+			--proxy)
+				export http_proxy="$2"
+				export https_proxy="$2"
+				shift 2
+				;;
+			-f|--full)
+				full_setup || exit 1
+				shift
+				;;
+			-c|--core)
+				core_setup || exit 1
+				shift
+				;;
+			--xsel)
+				install_xsel || exit 1
+				shift
+				;;
+			--get-configs)
+				get_configs || exit 1
+				shift
+				;;
+		esac
+	done
+}
+
+# Valid functions are
+
+#   install_vim_tmux   ; install_xsel      ; get_configs
+#   get_plugvim        ; import_keybinds   ; full_setup
+#   core_setup         ; check_args        ; run_args
+#   print_help
+
 # Main
-get_args $*
+check_args $@
