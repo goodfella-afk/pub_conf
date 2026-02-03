@@ -97,7 +97,6 @@ check_args()
 				*)
 					echo -e "\n"$1" is a bad argument, check --help / -h\n"
 					exit 1
-					break
 			esac
 
 			# shift 2 args when we process proxy
