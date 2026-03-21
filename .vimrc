@@ -65,7 +65,10 @@ nnoremap <leader>S :%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>
 " chmod
 nnoremap <leader>x <cmd>!chmod +x %<CR>
 
-" Don't cross 80chars
+" Don't cross 80char
+set colorcolumn=80
+
+" Don't cross 80chars toggle
 nnoremap <leader>b :execute "set colorcolumn=" . (&colorcolumn == "" ? "80" : "")<CR>
 
 " LineWrap toggle
