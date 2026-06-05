@@ -34,6 +34,7 @@ nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>/ :find<Space>
 nnoremap <leader>q :bw<CR>
 nnoremap <leader>l :ls<CR>:b<Space>
+nnoremap <leader>+ :enew<CR>
 nnoremap <leader>j :bnext<CR>
 nnoremap <leader>k :bprev<CR>
 
