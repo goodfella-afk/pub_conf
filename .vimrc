@@ -92,8 +92,8 @@ set termguicolors
 set scrolloff=8
 set updatetime=50
 
-set background=light
-" highlight Visual guibg=Gray20
+set background=dark
+highlight Visual guibg=Gray20
 
 set path+=**
 set wildmenu wildoptions=pum
