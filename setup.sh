@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Globals
 GITHUB_PREFIX="https://raw.githubusercontent.com"
 PLUG_VIM="$GITHUB_PREFIX/junegunn/vim-plug/refs/heads/master/plug.vim"
