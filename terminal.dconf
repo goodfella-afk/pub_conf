@@ -1,0 +1,19 @@
+[/]
+audible-bell=false
+background-color='rgb(0,0,0)'
+bold-is-bright=false
+cell-width-scale=1.0
+cursor-blink-mode='off'
+default-size-columns=135
+default-size-rows=35
+font='Monospace 16'
+foreground-color='rgb(255,255,255)'
+palette=['rgb(0,0,0)', 'rgb(205,0,0)', 'rgb(0,205,0)', 'rgb(205,205,0)', 'rgb(0,0,238)', 'rgb(205,0,205)', 'rgb(0,205,205)', 'rgb(229,229,229)', 'rgb(127,127,127)', 'rgb(255,0,0)', 'rgb(0,255,0)', 'rgb(255,255,0)', 'rgb(92,92,255)', 'rgb(255,0,255)', 'rgb(0,255,255)', 'rgb(255,255,255)']
+scroll-on-keystroke=true
+scroll-on-output=false
+scrollbar-policy='never'
+text-blink-mode='never'
+use-custom-command=false
+use-system-font=false
+use-theme-colors=false
+visible-name='bigfella'

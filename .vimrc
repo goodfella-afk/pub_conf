@@ -18,8 +18,9 @@ let mapleader = " "
 let g:vimwiki_list = [{'path': '$HOME/Documents/notes','syntax': 'markdown', 'ext': '.md'}]
 let g:vimwiki_listsyms = '✗○◐●✓'
 
-"xsel copy to yank register and to system clipboard
-xnoremap <leader>y y:call system('wl-copy', @")<CR>
+"xsel/wl-copy copy to yank register and to system clipboard
+"xnoremap <leader>y y:call system('wl-copy', @")<CR>
+xnoremap <leader>y y:call system('xsel -ib', @")<CR>
 
 "Toggle relativenumbers (for tmux yank)
 nnoremap <leader>N :set relativenumber!<CR>

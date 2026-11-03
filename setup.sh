@@ -5,8 +5,13 @@ GITHUB_PREFIX="https://raw.githubusercontent.com"
 PLUG_VIM="$GITHUB_PREFIX/junegunn/vim-plug/refs/heads/master/plug.vim"
 VIMRC="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/.vimrc"
 TMUX_CONF="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/.tmux.conf"
+BASH_ALIASES="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/.bash_aliases"
+GIT_PULL_NOTES="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/gitPullNotes.sh"
+GIT_PUSH_NOTES="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/gitPushNotes.sh"
+GIT_STATUS_NOTES="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/gitStatusNotes.sh"
 KEYBIND_1="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/wm-keybind.dconf"
 KEYBIND_2="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/media-keys.dconf"
+TERMINAL_CONF="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/terminal.dconf"
 
 print_help()
 {
@@ -43,11 +48,12 @@ install_xsel()
 	fi
 }
 
-# .vimrc and .tmux.conf
+# .vimrc ; .tmux.conf ; .bash_aliases
 get_configs()
 {
 	curl $VIMRC -o $HOME/.vimrc
 	curl $TMUX_CONF -o $HOME/.tmux.conf
+	curl $BASH_ALIASES -o $HOME/.bash_aliases
 }
 
 # plug.vim - for vimwiki and/or nerdtree
@@ -57,17 +63,31 @@ get_plugvim()
 	curl $PLUG_VIM -o $HOME/.vim/autoload/plug.vim
 }
 
-# Navigation keybinds
+# gitPullNotes ; gitPushNotes ; gitStatusNotes - helper scripts
+get_helper_scripts()
+{
+	mkdir -p $HOME/.config/helper-scripts
+	curl $GIT_PULL_NOTES -o $HOME/.config/helper-scripts/gitPullNotes.sh
+	curl $GIT_PUSH_NOTES -o $HOME/.config/helper-scripts/gitPushNotes.sh
+	curl $GIT_STATUS_NOTES -o $HOME/.config/helper-scripts/gitStatusNotes.sh
+}
+
+
+# Navigation keybinds and terminal config
 import_keybinds()
 {
 	curl $KEYBIND_1 -o /tmp/wm-keybind.dconf
 	curl $KEYBIND_2 -o /tmp/media-keys.dconf
+	curl $TERMINAL_CONF -o /tmp/terminal.dconf
 	dconf load /org/gnome/desktop/wm/keybindings/ \
 	   	< /tmp/wm-keybind.dconf
 	dconf load /org/gnome/settings-daemon/plugins/media-keys/ \
 		< /tmp/media-keys.dconf
+	dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ \
+		< /tmp/terminal.dconf
 	rm /tmp/wm-keybind.dconf
 	rm /tmp/media-keys.dconf
+	rm /tmp/terminal.dconf
 }
 
 # Full (workstation)
@@ -75,7 +95,7 @@ full_setup()
 {
 	install_vim_tmux && get_configs && \
 		get_plugvim && import_keybinds && \
-		install_xsel
+		install_xsel && get_helper_scripts
 }
 
 # Core (servers, remote)
