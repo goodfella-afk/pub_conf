@@ -115,6 +115,9 @@ vim.keymap.set("n", "<leader>k", "<cmd>bprev<CR>", { desc = "Previous buffer" })
 
 --==== remaps END ====--
 
+
+
+
 -- Bootstrap lazy.nvim (keep at the end)
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
@@ -162,6 +165,7 @@ require("lazy").setup({
                     "tsx",
                     "json",
                     "yaml",
+                    "xml",
                     "markdown",
                     "markdown_inline",
                 },
