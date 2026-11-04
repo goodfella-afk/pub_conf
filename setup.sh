@@ -19,7 +19,7 @@ print_help()
 	--proxy <http://host:port>   // have this as a first argument if behind a proxy
 	--full (-f)                  // (ws - daily driver)
 	--core (-c)                  // (server, remote)
-	--get-configs                // (vim, tmux)
+	--get-configs                // (vim, tmux, alacritty, aliases)
 
 EOF
 }
