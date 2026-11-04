@@ -1,8 +1,0 @@
-[/]
-custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']
-home=['<Super>e']
-
-[custom-keybindings/custom0]
-binding='<Super>Return'
-command='gnome-terminal --full-screen'
-name='full-screen-terminal'
