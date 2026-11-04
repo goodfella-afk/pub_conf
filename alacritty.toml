@@ -1,16 +1,10 @@
 [font]
 size = 16.0
 
-[window.dimensions]
-columns = 145
-lines = 45
+[window]
+startup_mode = "Maximized"
+decorations = "None"
 
 [window.padding]
 x = 10
 y = 10
-
-[window]
-decorations = "None"
-
-#[terminal]
-#osc52 = "CopyPaste"
