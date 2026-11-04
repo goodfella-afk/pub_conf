@@ -28,9 +28,9 @@ EOF
 install_vim_tmux()
 {
 	if command -v apt > /dev/null 2>&1; then
-		sudo apt install -y nvim tmux
+		sudo apt install -y neovim tmux
 	else
-		sudo dnf install -y nvim tmux
+		sudo dnf install -y neovim tmux
 	fi
 }
 
