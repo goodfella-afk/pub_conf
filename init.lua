@@ -1,5 +1,6 @@
 --OSC52
-vim.opt.clipboard = "unnamedplus"
+--vim.opt.clipboard = "unnamedplus"
+-- `"+`
 vim.g.clipboard = {
   name = 'OSC 52',
   copy = {
