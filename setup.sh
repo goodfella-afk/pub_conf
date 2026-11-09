@@ -88,7 +88,7 @@ check_args()
 					print_help
 					exit 0
 					;;
-				--proxy|-f|--full|-c|--core|--get-configs)
+				--proxy|-f|--full|-c|--core|--get-configs|--get-vimrc)
 					;;
 				*)
 					echo -e "\n"$1" is a bad argument, check --help / -h\n"
