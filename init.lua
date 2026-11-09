@@ -30,7 +30,6 @@ vim.opt.updatetime = 250
 vim.opt.title = true
 vim.opt.showcmd = true
 vim.o.laststatus = 0
-vim.cmd("colorscheme vim")
 
 -- netrw
 vim.g.netrw_banner = 0
