@@ -5,33 +5,10 @@ set nocompatible
 filetype plugin indent on
 syntax on
 
-"vim-plug plugin manager - keep em minimal
-call plug#begin()
-Plug 'vimwiki/vimwiki'
-Plug 'preservim/nerdtree'
-call plug#end()
-
 " -------------------------------- Remaps BEGIN
 let mapleader = " "
 
-"VimWiki
-let g:vimwiki_list = [{'path': '$HOME/Documents/notes','syntax': 'markdown', 'ext': '.md'}]
-let g:vimwiki_listsyms = '✗○◐●✓'
-
-"xsel/wl-copy copy to yank register and to system clipboard
-"xnoremap <leader>y y:call system('wl-copy', @")<CR>
-xnoremap <leader>y y:call system('xsel -ib', @")<CR>
-
-"Toggle relativenumbers (for tmux yank)
-nnoremap <leader>N :set relativenumber!<CR>
-
-"CTRL+W+N = normal mode in term
-set termwinsize=0x62
-nnoremap <leader>ot :rightbelow vertical term<CR>
-
 "NerdTree and vanilla find/navigation
-nnoremap <leader><BACKSPACE> :NERDTreeFocus<CR>
-nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>/ :find<Space>
 nnoremap <leader>q :bw<CR>
 nnoremap <leader>l :ls<CR>:b<Space>
@@ -75,7 +52,7 @@ nnoremap <leader>W :set wrap!<CR>
 " -------------------------------- Remaps END
 
 " ------ Settings
-
+set number
 set relativenumber
 
 "Indent

@@ -2,6 +2,7 @@
 
 # Globals
 GITHUB_PREFIX="https://raw.githubusercontent.com"
+VIMRC="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/.vimrc"
 INIT_LUA="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/init.lua"
 TREESITTER_LUA="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/treesitter.lua"
 VIMWIKI_LUA="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/vimwiki.lua"
@@ -22,6 +23,7 @@ print_help()
 	--full (-f)                  // (ws - daily driver)
 	--core (-c)                  // (server, remote)
 	--get-configs                // (vim, tmux, alacritty, aliases)
+	--get-vimrc                  // (.vimrc for remote/pluginless work)
 
 EOF
 }
@@ -68,6 +70,12 @@ full_setup()
 core_setup()
 {
 	install_vim_tmux && get_configs
+}
+
+# Get .vimrc for remote/pluginless work
+get_vimrc()
+{
+	curl $VIMRC -o $HOME/.vimrc
 }
 
 check_args()
@@ -123,6 +131,10 @@ run_args()
 				get_configs || exit 1
 				shift
 				;;
+			--get-vimrc)
+				get_vimrc || exit 1
+				shift
+				;;
 		esac
 	done
 }
@@ -130,8 +142,8 @@ run_args()
 # Valid functions are
 
 #   print_help	; install_vim_tmux  ; get_configs
-#	full_setup  ; core_setup		; check_args
-#   run_args
+#	full_setup  ; core_setup		; get_vimrc
+#   check_args  ; run_args
 
 # Main
 check_args $@
