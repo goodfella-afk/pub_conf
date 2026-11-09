@@ -30,6 +30,10 @@ vim.opt.title = true
 vim.opt.showcmd = true
 vim.cmd(":hi statusline guibg=NONE")
 
+-- netrw
+vim.g.netrw_banner = 0
+vim.g.netrw_liststyle = 3
+
 -- File search
 vim.opt.path:append("**")
 vim.opt.wildmenu = true
@@ -45,8 +49,12 @@ vim.opt.wildignore:append({
 --==== remaps begin =====-- 
 -- Yank to sys reg
 vim.keymap.set('v', '<leader>y', '"+y')
+
 -- Timestamp
 vim.keymap.set('n', '<leader>t', 'i<C-R>=strftime("%d-%B-%Y-%H:%M")<CR><Esc>')
+
+-- netrw project view
+vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
 
 -- Timestamp
 vim.keymap.set('n', '<leader>t', 'i<C-R>=strftime("%d-%B-%Y-%H:%M")<CR><Esc>')
