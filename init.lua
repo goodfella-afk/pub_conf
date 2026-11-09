@@ -1,18 +1,3 @@
---OSC52
---vim.opt.clipboard = "unnamedplus"
--- `"+`
-vim.g.clipboard = {
-  name = 'OSC 52',
-  copy = {
-    ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
-    ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
-  },
-  paste = {
-    ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
-    ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
-  },
-}
-
 --==== general setting ====--
 vim.g.mapleader = " "
 
@@ -40,10 +25,10 @@ vim.opt.smartcase = true
 -- UI
 vim.opt.termguicolors = true
 vim.opt.scrolloff = 8
-vim.opt.updatetime = 50
-vim.opt.background = "dark"
+vim.opt.updatetime = 250
 vim.opt.title = true
 vim.opt.showcmd = true
+vim.cmd(":hi statusline guibg=NONE")
 
 -- File search
 vim.opt.path:append("**")
@@ -57,19 +42,11 @@ vim.opt.wildignore:append({
 })
 --==== general setting end ====--
 
-
 --==== remaps begin =====-- 
-
--- VIMWIKI
-vim.g.vimwiki_list = {
-    {
-        path = vim.fn.expand("~/Documents/notes"),
-        syntax = "markdown",
-        ext = ".md",
-    },
-}
-
-vim.g.vimwiki_listsyms = "✗○◐●✓"
+-- Yank to sys reg
+vim.keymap.set('v', '<leader>y', '"+y')
+-- Timestamp
+vim.keymap.set('n', '<leader>t', 'i<C-R>=strftime("%d-%B-%Y-%H:%M")<CR><Esc>')
 
 -- Timestamp
 vim.keymap.set('n', '<leader>t', 'i<C-R>=strftime("%d-%B-%Y-%H:%M")<CR><Esc>')
@@ -113,10 +90,7 @@ vim.keymap.set("n", "<leader>+", "<cmd>enew<CR>", { desc = "New buffer" })
 vim.keymap.set("n", "<leader>l", "<cmd>ls<CR>:b ", { desc = "List buffers" })
 vim.keymap.set("n", "<leader>j", "<cmd>bnext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "<leader>k", "<cmd>bprev<CR>", { desc = "Previous buffer" })
-
 --==== remaps END ====--
-
-
 
 
 -- Bootstrap lazy.nvim (keep at the end)
@@ -135,52 +109,5 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
--- Plugins
-require("lazy").setup({
-    -- vimwiki
-    {
-        "vimwiki/vimwiki",
-    },
-
-    -- Treesitter (Neovim 0.10 compatible)
-    {
-        "nvim-treesitter/nvim-treesitter",
-        branch = "master",
-        build = ":TSUpdate",
-        config = function()
-            require("nvim-treesitter.configs").setup({
-                ensure_installed = {
-                    "lua",
-                    "vim",
-                    "vimdoc",
-                    "bash",
-                    "c",
-                    "c_sharp",
-                    "cpp",
-                    "powershell",
-                    "python",
-                    "html",
-                    "toml",
-                    "javascript",
-                    "typescript",
-                    "tsx",
-                    "json",
-                    "yaml",
-                    "xml",
-                    "markdown",
-                    "markdown_inline",
-                },
-
-                highlight = {
-                    enable = true,
-                },
-
-                indent = {
-                    enable = true,
-                },
-            })
-            -- Treat Vimwiki buffers as Markdown
-            vim.treesitter.language.register("markdown", "vimwiki")
-        end,
-    },
-})
+-- Plugins (keep at /.config/neovim/lua/plugins/plugname.lua)
+require("lazy").setup("plugins")

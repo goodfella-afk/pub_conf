@@ -3,6 +3,8 @@
 # Globals
 GITHUB_PREFIX="https://raw.githubusercontent.com"
 INIT_LUA="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/init.lua"
+TREESITTER_LUA="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/treesitter.lua"
+VIMWIKI_LUA="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/vimwiki.lua"
 ALACRITTY_TOML="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/alacritty.toml"
 TMUX_CONF="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/.tmux.conf"
 BASH_ALIAS="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/.bash_aliases"
@@ -37,10 +39,12 @@ install_vim_tmux()
 # .vimrc ; .tmux.conf ; .bash_aliases
 get_configs()
 {
-	mkdir -p $HOME/.config/nvim
+	mkdir -p $HOME/.config/nvim/lua/plugins
 	mkdir -p $HOME/.config/alacritty
 	curl $ALACRITTY_TOML -o $HOME/.config/alacritty/alacritty.toml
 	curl $INIT_LUA -o $HOME/.config/nvim/init.lua
+	curl $TREESITTER_LUA -o $HOME/.config/nvim/lua/plugins/treesitter.lua
+	curl $VIMWIKI_LUA -o $HOME/.config/nvim/lua/plugins/vimwiki.lua
 	curl $TMUX_CONF -o $HOME/.tmux.conf
 	curl $BASH_ALIAS -o $HOME/.bash_aliases
 }
