@@ -7,6 +7,7 @@ vim.opt.mouse = ""
 -- duh
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.swapfile = false
 
 -- Indents
 vim.opt.expandtab = false
@@ -28,7 +29,8 @@ vim.opt.scrolloff = 8
 vim.opt.updatetime = 250
 vim.opt.title = true
 vim.opt.showcmd = true
-vim.cmd(":hi statusline guibg=NONE")
+vim.o.laststatus = 0
+vim.cmd("colorscheme vim")
 
 -- netrw
 vim.g.netrw_banner = 0
