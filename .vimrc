@@ -74,7 +74,7 @@ set background=dark
 highlight Visual guibg=Gray20
 
 set path+=**
-set wildmenu wildoptions=pum
+set wildmenu
 set wildignore+=**/node_modules/**,**/dist/**,**/__pycache__/**
 set ignorecase
 set title
