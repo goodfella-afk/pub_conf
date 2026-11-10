@@ -3,6 +3,7 @@
 # Globals
 GITHUB_PREFIX="https://raw.githubusercontent.com"
 VIMRC="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/.vimrc"
+TMUX_VIMRC="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/.tmux-vimrc.conf"
 INIT_LUA="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/init.lua"
 TREESITTER_LUA="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/treesitter.lua"
 VIMWIKI_LUA="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/vimwiki.lua"
@@ -20,10 +21,10 @@ print_help()
 	Following arguments are supported:
 
 	--proxy <http://host:port>   // have this as a first argument if behind a proxy
-	--full (-f)                  // (ws - daily driver)
-	--core (-c)                  // (server, remote)
-	--get-configs                // (vim, tmux, alacritty, aliases)
-	--get-vimrc                  // (.vimrc for remote/pluginless work)
+	--full (-f)                  // (wkstn - daily driver)
+	--core (-c)                  // (server, remote - local remote dev stations)
+	--get-configs                // (nvim, tmux, alacritty, aliases - local remote dev stations)
+	--get-vimrc                  // (.vimrc and .tmux.conf - remote/pluginless non-dev work)
 
 EOF
 }
@@ -66,7 +67,7 @@ full_setup()
 	install_vim_tmux && get_configs && get_helper_scripts
 }
 
-# Core (servers, remote)
+# Core (servers, remote - dev)
 core_setup()
 {
 	install_vim_tmux && get_configs
@@ -76,6 +77,7 @@ core_setup()
 get_vimrc()
 {
 	curl $VIMRC -o $HOME/.vimrc
+	curl $TMUX_VIMRC -o $HOME/.tmux.conf
 }
 
 check_args()
