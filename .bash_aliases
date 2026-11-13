@@ -7,7 +7,7 @@ alias stop-deb="vmrun -T ws stop "/home/bigfella/vmware/debian_dev/debian_dev.vm
 # SSH aliases
 alias goto-kali="ssh -i /home/bigfella/Documents/keys/kali kali@172.16.15.128"
 # -Y is safer option then -X for X11 forwarding
-alias goto-deb="ssh -i /home/bigfella/Documents/keys/debian_dev dev@172.16.15.131"
+alias goto-dev="ssh -i /home/bigfella/Documents/keys/fdev fdev@172.16.15.131"
 alias goto-hserver="ssh -p 1810 -i /home/bigfella/Documents/keys/hserver bigfella@server.nikolazivkovic.me"
 
 # make my life easier
