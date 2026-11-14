@@ -21,8 +21,8 @@ print_help()
 	Following arguments are supported:
 
 	--proxy <http://host:port>   // have this as a first argument if behind a proxy
-	--full (-f)                  // (wkstn - daily driver)
-	--core (-c)                  // (server, remote - local remote dev stations)
+	--wkstn (-w)                 // (wkstn - daily driver)
+	--dev (-d)					 // (dev)
 	--get-configs                // (nvim, tmux, alacritty, aliases - local remote dev stations)
 	--get-vimrc                  // (.vimrc and .tmux.conf - remote/pluginless non-dev work)
 
