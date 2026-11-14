@@ -1,18 +1,41 @@
 #!/bin/bash
 
 # Globals
-GITHUB_PREFIX="https://raw.githubusercontent.com"
-VIMRC="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/.vimrc"
-TMUX_VIMRC="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/.tmux-vimrc.conf"
-INIT_LUA="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/init.lua"
-TREESITTER_LUA="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/treesitter.lua"
-VIMWIKI_LUA="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/vimwiki.lua"
-ALACRITTY_TOML="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/alacritty.toml"
-TMUX_CONF="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/.tmux.conf"
-BASH_ALIAS="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/.bash_aliases"
-GIT_PULL_NOTES="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/gitPullNotes.sh"
-GIT_PUSH_NOTES="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/gitPushNotes.sh"
-GIT_STATUS_NOTES="$GITHUB_PREFIX/goodfella-afk/pub_conf/refs/heads/main/gitStatusNotes.sh"
+GITHUB_PREFIX="https://raw.githubusercontent.com/goodfella-afk/pub_conf/refs/heads/main"
+
+# Wkstn globals
+WKSTN_ALACRITTY_TOML="$GITHUB_PREFIX/wkstn/alacritty/alacritty.toml"
+
+WKSTN_BASH_ALIAS="$GITHUB_PREFIX/wkstn/.bash_aliases"
+WKSTN_TMUX_CONF="$GITHUB_PREFIX/wkstn/.tmux.conf"
+
+WKSTN_INIT_LUA="$GITHUB_PREFIX/wkstn/.config/nvim/init.lua"
+WKSTN_CONFIGS_LUA="$GITHUB_PREFIX/wkstn/.config/nvim/lua/configs.lua"
+WKSTN_KEYMAPS_LUA="$GITHUB_PREFIX/wkstn/.config/nvim/lua/keymaps.lua"
+WKSTN_LAZY_SETUP_LUA="$GITHUB_PREFIX/wkstn/.config/nvim/lua/lazy-setup.lua"
+WKSTN_TREESITTER_LUA="$GITHUB_PREFIX/wkstn/.config/nvim/lua/plugins/treesitter.lua"
+WKSTN_VIMWIKI_LUA="$GITHUB_PREFIX/wkstn/.config/nvim/lua/plugins/vimwiki.lua"
+
+WKSTN_GIT_PULL_NOTES="$GITHUB_PREFIX/wkstn/helper-scripts/gitPullNotes.sh"
+WKSTN_GIT_PUSH_NOTES="$GITHUB_PREFIX/wkstn/helper-scripts/gitPushNotes.sh"
+WKSTN_GIT_STATUS_NOTES="$GITHUB_PREFIX/wkstn/helper-scripts/gitStatusNotes.sh"
+
+
+# Dev globals
+DEV_TMUX_CONF="$GITHUB_PREFIX/dev/.tmux.conf"
+
+DEV_INIT_LUA="$GITHUB_PREFIX/dev/.config/nvim/init.lua"
+DEV_CONFIGS_LUA="$GITHUB_PREFIX/dev/.config/nvim/lua/configs.lua"
+DEV_KEYMAPS_LUA="$GITHUB_PREFIX/dev/.config/nvim/lua/keymaps.lua"
+DEV_PLUGINS_LUA="$GITHUB_PREFIX/dev/.config/nvim/lua/plugins.lua"
+DEV_TREESITTER_LUA="$GITHUB_PREFIX/dev/.config/nvim/lua/plugins/treesitter.lua"
+DEV_LSP_LUA="$GITHUB_PREFIX/dev/.config/nvim/lua/lsp.lua"
+DEV_CLANGD_LUA="$GITHUB_PREFIX/dev/.config/nvim/lua/lsp/clangd.lua"
+DEV_ROSLYN_LS_LUA="$GITHUB_PREFIX/dev/.config/nvim/lua/lsp/roslyn_ls.lua"
+
+# Legacy globals
+LEGACY_VIMRC="$GITHUB_PREFIX/legacy/.vimrc"
+LEGACY_TMUX_VIMRC="$GITHUB_PREFIX/legacy/.tmux-vimrc.conf"
 
 print_help()
 {
@@ -76,8 +99,8 @@ core_setup()
 # Get .vimrc for remote/pluginless work
 get_vimrc()
 {
-	curl $VIMRC -o $HOME/.vimrc
-	curl $TMUX_VIMRC -o $HOME/.tmux.conf
+	curl $LEGACY_VIMRC -o $HOME/.vimrc
+	curl $LEGACY_TMUX_VIMRC -o $HOME/.tmux.conf
 }
 
 check_args()
