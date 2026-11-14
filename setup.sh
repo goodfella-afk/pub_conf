@@ -57,7 +57,7 @@ EOF
 install_nvim_tmux()
 {
 	if command -v apt > /dev/null 2>&1; then
-		sudo apt install -y neovim tmux
+		sudo apt-get update && sudo apt-get install -y neovim tmux
 	else
 		sudo dnf install -y neovim tmux
 	fi
@@ -118,6 +118,29 @@ dev_get_configs()
 init_dev()
 {
 	install_nvim_tmux && dev_get_configs
+
+	if command -v apt > /dev/null 2>&1; then
+		sudo apt-get update && sudo apt-get install -y \
+			tree-sitter-cli \
+			git \
+			tar \
+			gcc \
+			make \
+			build-essential \
+			gcc-mingw-w64-x86-64 \
+			g++-mingw-w64-x86-64 \
+			ccache
+	else
+		sudo dnf install -y \
+			tree-sitter-cli \
+			git \
+			tar \
+			gcc \
+			make \
+			gcc-c++ \
+			mingw64-gcc \
+			mingw64-gcc-c++ \
+			ccache
 }
 
 # Get .vimrc for remote/pluginless work
