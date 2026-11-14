@@ -44,16 +44,17 @@ print_help()
 	Following arguments are supported:
 
 	--proxy <http://host:port>   // have this as a first argument if behind a proxy
-	--wkstn (-w)                 // (wkstn - daily driver)
-	--dev (-d)					 // (dev)
-	--get-configs                // (nvim, tmux, alacritty, aliases - local remote dev stations)
+	--init-wkstn (-iw)           // (Daily driver - installs nvim,tmux and gets wkstn related configs)
+	--wkstn-get-configs          // (Only reload wkstn related configs)
+	--init-dev (-id)			 // (Dev machine - installs nvim,tmux(latest builds) and gets dev related configs)
+	--dev-get-configs            // (Only reload dev related configs)
 	--get-vimrc                  // (.vimrc and .tmux.conf - remote/pluginless non-dev work)
 
 EOF
 }
 
-# Install vim, tmux
-install_vim_tmux()
+# Install nvim, tmux
+install_nvim_tmux()
 {
 	if command -v apt > /dev/null 2>&1; then
 		sudo apt install -y neovim tmux
@@ -62,38 +63,61 @@ install_vim_tmux()
 	fi
 }
 
-# .vimrc ; .tmux.conf ; .bash_aliases
-get_configs()
+# Only reload wkstn related configs
+wkstn_get_configs()
 {
-	mkdir -p $HOME/.config/nvim/lua/plugins
 	mkdir -p $HOME/.config/alacritty
-	curl $ALACRITTY_TOML -o $HOME/.config/alacritty/alacritty.toml
-	curl $INIT_LUA -o $HOME/.config/nvim/init.lua
-	curl $TREESITTER_LUA -o $HOME/.config/nvim/lua/plugins/treesitter.lua
-	curl $VIMWIKI_LUA -o $HOME/.config/nvim/lua/plugins/vimwiki.lua
-	curl $TMUX_CONF -o $HOME/.tmux.conf
-	curl $BASH_ALIAS -o $HOME/.bash_aliases
-}
+	curl $WKSTN_ALACRITTY_TOML -o $HOME/.config/alacritty/alacritty.toml
 
-# gitPullNotes ; gitPushNotes ; gitStatusNotes - helper scripts
-get_helper_scripts()
-{
+	curl $WKSTN_BASH_ALIAS -o $HOME/.bash_aliases
+	curl $WKSTN_TMUX_CONF -o $HOME/.tmux.conf
+
+	mkdir -p $HOME/.config/nvim
+	curl $WKSTN_INIT_LUA -o $HOME/.config/nvim/init.lua
+	mkdir -p $HOME/.config/nvim/lua
+	curl $WKSTN_CONFIGS_LUA -o $HOME/.config/nvim/lua/configs.lua
+	curl $WKSTN_KEYMAPS_LUA -o $HOME/.config/nvim/lua/keymaps.lua
+	curl $WKSTN_LAZY_SETUP_LUA -o $HOME/.config/nvim/lua/lazy-setup.lua
+	mkdir -p $HOME/.config/nvim/lua/plugins/
+	curl $WKSTN_TREESITTER_LUA -o $HOME/.config/nvim/lua/plugins/treesitter.lua
+	curl $WKSTN_VIMWIKI_LUA -o $HOME/.config/nvim/lua/plugins/vimwiki.lua
+
 	mkdir -p $HOME/.config/helper-scripts
-	curl $GIT_PULL_NOTES -o $HOME/.config/helper-scripts/gitPullNotes.sh
-	curl $GIT_PUSH_NOTES -o $HOME/.config/helper-scripts/gitPushNotes.sh
-	curl $GIT_STATUS_NOTES -o $HOME/.config/helper-scripts/gitStatusNotes.sh
+	curl $WKSTN_GIT_PULL_NOTES -o $HOME/.config/helper-scripts/gitPullNotes.sh
+	curl $WKSTN_GIT_PUSH_NOTES -o $HOME/.config/helper-scripts/gitPushNotes.sh
+	curl $WKSTN_GIT_STATUS_NOTES -o $HOME/.config/helper-scripts/gitStatusNotes.sh
+
 }
 
-# Full (workstation)
-full_setup()
+# init_wkstn
+init_wkstn()
 {
-	install_vim_tmux && get_configs && get_helper_scripts
+	install_nvim_tmux && wkstn_get_configs
 }
 
-# Core (servers, remote - dev)
-core_setup()
+# Only reload dev related configs
+dev_get_configs()
 {
-	install_vim_tmux && get_configs
+	curl $DEV_TMUX_CONF -o $HOME/.tmux.conf
+
+	mkdir -p $HOME/.config/nvim
+	curl $DEV_INIT_LUA -o $HOME/.config/nvim/init.lua
+	mkdir -p $HOME/.config/nvim/lua
+	curl $DEV_CONFIGS_LUA -o $HOME/.config/nvim/lua/configs.lua
+	curl $DEV_KEYMAPS_LUA -o $HOME/.config/nvim/lua/keymaps.lua
+	curl $DEV_PLUGINS_LUA -o $HOME/.config/nvim/lua/plugins.lua
+	curl $DEV_LSP_LUA -o $HOME/.config/nvim/lua/lsp.lua
+	mkdir -p $HOME/.config/nvim/lua/plugins
+	curl $DEV_TREESITTER_LUA -o $HOME/.config/nvim/lua/plugins/treesitter.lua
+	mkdir -p $HOME/.config/nvim/lua/lsp
+	curl $DEV_CLANGD_LUA -o $HOME/.config/nvim/lua/lsp/clangd.lua
+	curl $DEV_ROSLYN_LS_LUA -o $HOME/.config/nvim/lua/lsp/roslyn_ls.lua
+}
+
+# init_dev
+init_dev()
+{
+	install_nvim_tmux && dev_get_configs
 }
 
 # Get .vimrc for remote/pluginless work
@@ -113,7 +137,7 @@ check_args()
 					print_help
 					exit 0
 					;;
-				--proxy|-f|--full|-c|--core|--get-configs|--get-vimrc)
+				--proxy|-iw|--init-wkstn|-id|--init-dev|--wkstn-get-configs|--dev-get-configs|--get-vimrc)
 					;;
 				*)
 					echo -e "\n"$1" is a bad argument, check --help / -h\n"
@@ -144,16 +168,20 @@ run_args()
 				export https_proxy="$2"
 				shift 2
 				;;
-			-f|--full)
-				full_setup || exit 1
+			-iw|--init-wkstn)
+				init_wkstn || exit 1
 				shift
 				;;
-			-c|--core)
-				core_setup || exit 1
+			-id|--init-dev)
+				init_dev || exit 1
 				shift
 				;;
-			--get-configs)
-				get_configs || exit 1
+			--wkstn-get-configs)
+				wkstn_get_configs || exit 1
+				shift
+				;;
+			--dev-get-configs)
+				dev_get_configs || exit 1
 				shift
 				;;
 			--get-vimrc)
@@ -166,8 +194,8 @@ run_args()
 
 # Valid functions are
 
-#   print_help	; install_vim_tmux  ; get_configs
-#	full_setup  ; core_setup		; get_vimrc
+#   print_help	; install_nvim_tmux  ; init_wkstn
+#	init_dev    ; wkstn_get_configs	 ; dev_get_configs
 #   check_args  ; run_args
 
 # Main
